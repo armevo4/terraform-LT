@@ -7,7 +7,9 @@ resource "aws_launch_template" "aws-LT" {
   image_id      = "ami-0f9fc25dd2506cf6d"
   instance_type = "t2.micro"
   vpc_security_group_ids = ["sg-0c8b9feb51abf788b"]
-  ag_specifications {
+  key_name = "aws-freetair-key"
+
+  tag_specifications {
     resource_type = "instance"
 
     tags = {
@@ -28,9 +30,5 @@ resource "aws_autoscaling_group" "aws-ASG" {
   launch_template {
     id      = aws_launch_template.aws-LT.id
     version = "$Latest"
-  }
-  tag {
-    key                 = "tf_asg"
-    value               = "tf-value"
   }
 }
